@@ -1,0 +1,6 @@
+{
+  "name": "id3d-poo", "version": "1.0.0", "private": true,
+  "description": "Implementación inicial del modelo de clases de ID3D",
+  "type": "module", "engines": { "node": ">=22" },
+  "scripts": { "start": "node src/demo.js", "test": "node --test" }
+}

@@ -1,0 +1,21 @@
+✔ impide publicar sin archivos (2.8561ms)
+✔ publica con archivo y protege colección (0.568229ms)
+✔ rechaza duplicados (0.254945ms)
+✔ no admite archivos después de publicar (0.186863ms)
+✔ validación de tamaño y correo (0.221705ms)
+✔ valida expiración (0.218811ms)
+✔ límites temporales del permiso (0.266242ms)
+✔ revocación bloquea acceso (0.228425ms)
+✔ usuario inactivo bloquea y reactivación restaura acceso (0.557983ms)
+✔ archivo no publicado y archivado bloquean acceso (3.754413ms)
+✔ rechaza fecha inválida y relación equivocada (0.32416ms)
+✔ identidad pública inmutable (0.208996ms)
+✔ un archivo no pertenece a dos estudios (0.221565ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 161.104889
