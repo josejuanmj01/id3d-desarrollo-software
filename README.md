@@ -1,10 +1,15 @@
 # Imagen Dental 3D ID3D
 
 Intituto Universitario Veracruzando.
+
 Maestria en Ingeniería y Desarrollo de Software.
+
 Implementación inicial orientada a objetos para Desarrollo de Software, Unidad I.
+
 Proyecto: Sistema web de Imagen Dental 3D (ID3D).
+
 Autor: José Juan Muñoz Jiménez.
+
 Materia: Desarrollo de Software.
 
 ID3D busca gestionar y entregar estudios de imagen dental con acceso controlado.
