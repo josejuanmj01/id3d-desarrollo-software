@@ -53,7 +53,7 @@ Demostración en memoria: no se cargan ni descargan archivos reales.
 | src/modelo.js | Siete clases, constructores y validaciones |
 | src/demo.js | Escenario reproducible con datos ficticios |
 | test/modelo.test.js | Trece pruebas de comportamiento |
-| docs/aportacion-foro.md | Borrador de doce renglones y espacio para el enlace real |
+| docs/aportacion-foro.md | Descripción del proyecto y enlace |
 
 ## Tecnologías y límites
 
