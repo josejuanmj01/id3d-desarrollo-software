@@ -82,7 +82,8 @@ La ejecución automatizada no requiere Postman ni insertar UUID manualmente.
 - `src/demo-api.js`: demostración automatizada con resultados visibles por consola.
 - `test/modelo.test.js`: trece pruebas originales.
 - `test/api.test.js`: prueba de integración que verifica el ciclo completo, validaciones y estados HTTP.
-- `docs/aportacion-foro-unidad-ii.md`: aportación académica editable, más guía para evidencias.
+- `docs/guia-evidencias-unidad-ii.md`: documentación de las bibliotecas y guía para capturas de ejecución.
+- `docs/documentacion-unidad-i.md`: documentación de la implementación previa.
 
 ## Restricciones y siguientes pasos
 
