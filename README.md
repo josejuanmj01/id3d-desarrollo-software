@@ -1,81 +1,98 @@
-# Imagen Dental 3D ID3D
+# Imagen Dental 3D (ID3D) · Desarrollo de Software · Unidad II
 
-Intituto Universitario Veracruzando.
+**Maestría en Ingeniería y Desarrollo de Software — IUV**  
+**Autor:** José Juan Muñoz Jiménez  
+**Repositorio:** https://github.com/josejuanmj01/id3d-desarrollo-software
 
-Maestria en Ingeniería y Desarrollo de Software.
+Esta versión extiende la entrega de la Unidad I sin sustituir su modelo orientado a objetos. Se implementan tres librerías reales: **Express**, **Zod** y **UUID**. El resultado es una **API REST de demostración** que trabaja únicamente con datos ficticios en memoria.
 
-Implementación inicial orientada a objetos para Desarrollo de Software, Unidad I.
+## Las tres librerías implementadas
 
-Proyecto: Sistema web de Imagen Dental 3D (ID3D).
+| Librería | Uso específico en ID3D | Evidencia |
+|---|---|---|
+| Express 5 | Expone rutas HTTP para registrar pacientes, crear estudios, registrar metadatos y publicar estudios. | `src/api.js` y consulta `GET /api/salud` |
+| Zod 4 | Comprueba campos, formato UUID, fecha, MIME y tamaños; rechaza solicitudes incorrectas con HTTP 400. | `src/api.js` y paso 2 de `npm run demo:api` |
+| uuid 14 | Genera identificadores públicos UUID v4 para pacientes y estudios y folios de estudios. | `src/api.js` y pasos 3 y 4 de `npm run demo:api` |
 
-Autor: José Juan Muñoz Jiménez.
+**Importante:** UUID v4 reduce mucho el riesgo de colisión, pero no garantiza por sí solo unicidad global absoluta. La demo evita colisiones en los registros en memoria; la futura base de datos MySQL deberá imponer `UNIQUE` en los identificadores persistentes.
 
-Materia: Desarrollo de Software.
+## Requisitos y ejecución
 
-ID3D busca gestionar y entregar estudios de imagen dental con acceso controlado.
-Esta entrega implementa siete clases en JavaScript y una demostración por consola.
-El diagrama fue reconstruido y actualizado para esta actividad; no es una copia
-verificada de la entrega anterior de Análisis y Diseño de Sistemas.
+Se requiere **Node.js 22 o superior** y una conexión a internet **para instalar** las dependencias por primera vez.
 
-## Ejecutar en Windows, macOS o Linux
-
-1. Instalar Node.js 22 o superior desde https://nodejs.org/ y Visual Studio Code desde
-   https://code.visualstudio.com/ .
-2. Extraer la carpeta completa `id3d-poo` y abrirla en Visual Studio Code.
-3. Abrir Terminal > New Terminal dentro de esa carpeta.
-4. Verificar `node --version` y ejecutar:
+En Visual Studio Code, abrir la carpeta del proyecto y ejecutar:
 
 ```bash
-node src/demo.js
-node --test
+npm install
+npm run demo:api
+npm test
 ```
 
-También se pueden usar `npm start` y `npm test`. No hay paquetes externos: no es
-necesario ejecutar npm install. No se necesitan credenciales, variables de entorno
-ni MySQL para esta demostración en memoria. Los datos se pierden al terminar.
+Para levantar la API REST localmente:
 
-## Resultado esperado
-
-```text
-Validación esperada: Se requiere al menos un archivo
-Paciente: Paciente Ficticio
-Estado: PUBLICADO
-Acceso autorizado: true
-Acceso después de revocar: false
-Demostración en memoria: no se cargan ni descargan archivos reales.
+```bash
+npm run api
 ```
 
-## Contenido
+Abrir `http://127.0.0.1:3000/api/salud` en el navegador. El resultado esperado es:
 
-| Archivo | Función |
-|---|---|
-| [docs/diagrama-clases.md](docs/diagrama-clases.md) | Diagrama UML en Mermaid, reglas y correspondencia con MySQL |
-| src/modelo.js | Siete clases, constructores y validaciones |
-| src/demo.js | Escenario reproducible con datos ficticios |
-| test/modelo.test.js | Trece pruebas de comportamiento |
-| docs/aportacion-foro.md | Descripción del proyecto y enlace |
+```json
+{"sistema":"ID3D","estado":"activo","persistencia":"memoria"}
+```
 
-## Tecnologías y límites
+La demostración completa `npm run demo:api` crea su propio servidor HTTP temporal y realiza una prueba integrada con datos ficticios: consulta de salud, rechazo de campos inválidos, creación de paciente con UUID, creación de estudio, prevención de publicación sin archivos, incorporación de metadatos y publicación.
 
-Se eligió JavaScript porque permite implementar clases y compartir lenguaje entre el
-backend y las futuras interfaces. Node.js ejecuta el modelo fuera del navegador.
-Visual Studio Code ofrece asistencia para JavaScript y depuración.
+La demo original de la Unidad I se mantiene:
 
-La arquitectura prevista utilizará React Native, Expo y React Native Web para las
-interfaces; Node.js y una API para el backend; MySQL con InnoDB para la persistencia.
-Esta entrega NO implementa interfaces, servidor HTTP, conexión MySQL, autenticación,
-carga real de archivos ni autorización del operador que concede permisos. El método
-esVigente evalúa un permiso ya creado; no reemplaza la seguridad de una API.
-La demo comprueba metadatos, no existencia física de archivos ni integridad DICOM.
-No es un sistema listo para producción.
+```bash
+npm start
+```
 
-La cardinalidad y los límites de esta iteración están documentados junto al diagrama.
-El adaptador MySQL deberá hacer que cada elemento del sistema tenga un identificador 
-único que no se repita, para evitar confusiones o errores en correos, folios, claves y permisos,
-y mapear objetos a las tablas existentes.
+## Rutas disponibles
 
-## Fuentes técnicas
+| Método | Ruta | Función |
+|---|---|---|
+| GET | `/api/salud` | Comprueba que el servidor responde |
+| POST | `/api/pacientes` | Registra un paciente ficticio |
+| POST | `/api/estudios` | Crea un estudio asociado a un paciente |
+| POST | `/api/estudios/:id/archivos` | Registra metadatos, **sin subir un archivo real** |
+| POST | `/api/estudios/:id/publicar` | Publica el estudio si tiene al menos un archivo de metadatos |
+| GET | `/api/estudios/:id` | Consulta el estudio ficticio por UUID |
 
-- JavaScript en VS Code: https://code.visualstudio.com/docs/languages/javascript
-- Pruebas en Node.js: https://nodejs.org/api/test.html
-- Diagramas en GitHub: https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams
+Ejemplo de paciente:
+
+```json
+{"expediente":"DEMO-001","nombres":"Paciente","apellidos":"Ficticio"}
+```
+
+Ejemplo de estudio (sustituir `UUID_DEVUELTO` por el identificador del paso anterior):
+
+```json
+{"pacienteId":"UUID_DEVUELTO","tipoEstudio":"Radiografía panorámica","fechaRealizacion":"2026-11-09T12:00:00Z"}
+```
+
+La ejecución automatizada no requiere Postman ni insertar UUID manualmente.
+
+## Archivos relevantes
+
+- `src/modelo.js`: siete clases del modelo original, intactas.
+- `src/demo.js`: demostración original de la Unidad I.
+- `src/api.js`: implementación de Express + Zod + UUID.
+- `src/servidor.js`: inicio del servicio HTTP en `127.0.0.1:3000`.
+- `src/demo-api.js`: demostración automatizada con resultados visibles por consola.
+- `test/modelo.test.js`: trece pruebas originales.
+- `test/api.test.js`: prueba de integración que verifica el ciclo completo, validaciones y estados HTTP.
+- `docs/aportacion-foro-unidad-ii.md`: aportación académica editable, más guía para evidencias.
+
+## Restricciones y siguientes pasos
+
+**Prototipo local para fines académicos; NO apto para producción ni para información clínica real.** Los datos se pierden al detener el proceso. No implementa autenticación, autorización de usuarios, cifrado de datos clínicos, auditoría, carga/validación de archivos reales ni conexión a MySQL. El atributo MIME es un metadato proporcionado por el cliente y no verifica la integridad del archivo. No se debe publicar el servidor ni cargar estudios de pacientes reales.
+
+Para la Unidad III se podrá implementar un adaptador MySQL con restricciones de unicidad, control de acceso autenticado, registro de auditoría y almacenamiento seguro de archivos. Las clases existentes se conservan como base del dominio.
+
+## Fuentes
+
+- Express: https://expressjs.com/
+- Zod: https://zod.dev/basics
+- UUID: https://www.npmjs.com/package/uuid
+- Node.js Test Runner: https://nodejs.org/api/test.html
