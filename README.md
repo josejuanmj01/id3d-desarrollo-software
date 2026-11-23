@@ -2,7 +2,7 @@
 
 Instituto Universitario Veracruzano
 Maestría en Ingeniería y Desarrollo de Software
-Proyecto de Desarrollo de Software — Unidades I y II
+Proyecto de Desarrollo de Software — Unidades I, II y III
 Proyecto: Sistema web de Imagen Dental 3D (ID3D)
 Autor: José Juan Muñoz Jiménez.
 Materia: Desarrollo de Software
@@ -254,3 +254,65 @@ Las capturas se encuentran en [docs/evidencias](docs/evidencias).
 - Express: https://expressjs.com/
 - Zod: https://zod.dev/
 - mysql2: https://sidorares.github.io/node-mysql2/docs
+
+- ## Sprint 1 — Registro y consulta de pacientes
+
+La primera iteración de Imagen Dental 3D permite registrar y consultar
+pacientes ficticios mediante una API local. Express gestiona las rutas,
+Zod valida los datos de entrada y mysql2 guarda y consulta los registros
+en MySQL.
+
+## Unidad III — Sprint 1: Registro y consulta de pacientes
+
+### Cómo ejecutar el programa
+
+1. Instala Node.js 22 o superior y ten MySQL en ejecución.
+2. Para una instalación nueva, ejecuta
+   [`sql/01_modulo_pacientes.sql`](sql/01_modulo_pacientes.sql)
+   en MySQL Workbench.
+3. Crea `.env` a partir de [`.env.example`](.env.example) y configura
+   tus credenciales locales. Conserva `.env` fuera del repositorio.
+4. Desde la carpeta que contiene `package.json`, ejecuta en PowerShell:
+
+   ```powershell
+   npm.cmd ci
+   node --env-file=.env src/probar-conexion.js
+   node --env-file=.env src/servidor.js
+   ```
+
+5. Deja el servidor abierto. Con el puerto predeterminado, consulta
+   `http://127.0.0.1:3000/api/estado` para verificar que la API responda
+   y `http://127.0.0.1:3000/api/pacientes` para ver el listado.
+
+Para registrar un paciente ficticio, ejecuta lo siguiente en una segunda
+terminal de PowerShell:
+
+```powershell
+$paciente = @{
+    expediente = 'SPRINT1-' + (Get-Date -Format 'yyyyMMddHHmmss')
+    nombres = 'Elena'
+    apellidos = 'Paciente de Prueba'
+    fechaNacimiento = '1992-04-18'
+} | ConvertTo-Json
+
+$respuesta = Invoke-WebRequest -UseBasicParsing `
+    -Uri 'http://127.0.0.1:3000/api/pacientes' `
+    -Method Post `
+    -ContentType 'application/json' `
+    -Body $paciente
+
+$respuesta.StatusCode
+$respuesta.Content
+```
+
+La API debe devolver HTTP `201`. Busca el expediente devuelto en
+`/api/pacientes`. Para comprobar la persistencia, detén la API con
+`Ctrl + C`, vuelve a iniciarla y consulta el mismo expediente.
+
+### Evidencias del Sprint 1
+
+- [Registro de paciente con HTTP 201](docs/evidencias/sprint-1/Sprint1_05_Registro_Paciente.png)
+- [Consulta del paciente registrado](docs/evidencias/sprint-1/Sprint1_06_Consulta_Paciente.png)
+- [Consulta del mismo expediente tras reiniciar la API](docs/evidencias/sprint-1/Sprint1_07_Persistencia_Tras_Reinicio.png)
+- [Pruebas del modelo con 13 aprobadas y 0 fallidas](docs/evidencias/sprint-1/Sprint1_08_Pruebas_Modelo.png)
+- [Carpeta con las nueve evidencias](docs/evidencias/sprint-1/)
